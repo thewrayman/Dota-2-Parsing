@@ -48,7 +48,7 @@ public class XMLimporter extends inputManagement{
 		String url = searchString(remainderURL,key,accountID,makeXML);			//compile the string
 		writeProductsXML(url);													//write the results to a file
 		
-		XMLParser.parseInfo(searchType);										//parse the results depending on which search type
+/*		XMLParser.parseInfo(searchType);*/										//parse the results depending on which search type
 
 	}
 	
@@ -101,7 +101,7 @@ public class XMLimporter extends inputManagement{
 	public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException, TransformerException {
 		// TODO Auto-generated method stub
 		GetHeroes.checkHeroes(key); //update the list of heroes upon startup
-		
+		System.out.println("heroes checked");
 		getInfo();					//ask for inputs to generate search URLS
 
 	}
@@ -126,7 +126,7 @@ public class XMLimporter extends inputManagement{
         TransformerFactory tfactory = TransformerFactory.newInstance();
         Transformer xform = tfactory.newTransformer();
         
-        File myOutput = new File("D:\\Documents\\dota 2 coding\\"+steamID+"\\"+searchType+".xml");
+        File myOutput = new File("C:\\users\\emmet\\Documents\\dota 2 coding\\"+steamID+"\\"+searchType+".xml");
         myOutput.getParentFile().mkdirs();
         FileWriter writer = new FileWriter(myOutput);
         xform.transform(new DOMSource(xmlDoc), new StreamResult(myOutput));
@@ -146,23 +146,27 @@ public class XMLimporter extends inputManagement{
 	}
 	
 	protected static void writeProductsXML(String iurl, String directory) throws ParserConfigurationException,IOException,SAXException, TransformerException{
-		
+		System.out.println("writeproducts");
 		URL url = new URL(iurl);
+		System.out.println(iurl);
         URLConnection conn = url.openConnection();
-        
+        System.out.println("conn opened");
         ReadableByteChannel rbc = Channels.newChannel(url.openStream());
         FileOutputStream fos = new FileOutputStream("information.html");
         fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 		
+        System.out.println("doc fac starting");
         DocumentBuilderFactory docfactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = docfactory.newDocumentBuilder();
         Document xmlDoc = builder.parse(conn.getInputStream());
-        
+        System.out.println("doc fac ended");
 
         TransformerFactory tfactory = TransformerFactory.newInstance();
         Transformer xform = tfactory.newTransformer();
         
+        System.out.println("writing to: "+directory);
         File myOutput = new File(directory);
+        System.out.println("writing to: "+directory);
         myOutput.getParentFile().mkdirs();
         FileWriter writer = new FileWriter(myOutput);
         xform.transform(new DOMSource(xmlDoc), new StreamResult(myOutput));

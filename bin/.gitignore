@@ -1,0 +1,15 @@
+/DefaultGUI.class
+/EconomySchema.class
+/GetHeroes.class
+/GetLeagueListing.class
+/GetLiveLeagueGames.class
+/GetMatchDetails.class
+/GetMatchHistory.class
+/GetMatchHistoryBySequenceNum.class
+/GetPlayerSummaries.class
+/GetTeamInfoByTeamID.class
+/Player.class
+/XMLParser.class
+/XMLimporter.class
+/getMatchPlayer.class
+/inputManagement.class
