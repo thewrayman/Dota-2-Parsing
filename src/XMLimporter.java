@@ -7,6 +7,7 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.util.Scanner;
 
+import org.json.JSONException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Text;
@@ -44,10 +45,12 @@ public class XMLimporter extends inputManagement{
 	
 	
 	
-	public static void getInfo() throws ParserConfigurationException, IOException, SAXException, TransformerException{
+	public static void getInfo() throws ParserConfigurationException, IOException, SAXException, TransformerException, JSONException{
 		String url = searchString(remainderURL,key,accountID,makeXML);			//compile the string
-		writeProductsXML(url);													//write the results to a file
-		
+		writeProductsXML(url);
+		System.out.println("parse file");
+		XMLParser.parseInfo(searchType);//write the results to a file
+		System.out.println("finished file");
 /*		XMLParser.parseInfo(searchType);*/										//parse the results depending on which search type
 
 	}
@@ -98,7 +101,7 @@ public class XMLimporter extends inputManagement{
 	}
 	
 	
-	public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException, TransformerException {
+	public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException, TransformerException, JSONException {
 		// TODO Auto-generated method stub
 		GetHeroes.checkHeroes(key); //update the list of heroes upon startup
 		System.out.println("heroes checked");
@@ -126,7 +129,7 @@ public class XMLimporter extends inputManagement{
         TransformerFactory tfactory = TransformerFactory.newInstance();
         Transformer xform = tfactory.newTransformer();
         
-        File myOutput = new File("C:\\users\\emmet\\Documents\\dota 2 coding\\"+steamID+"\\"+searchType+".xml");
+        File myOutput = new File("D:\\Documents\\dota 2 coding\\"+steamID+"\\"+searchType+".xml");
         myOutput.getParentFile().mkdirs();
         FileWriter writer = new FileWriter(myOutput);
         xform.transform(new DOMSource(xmlDoc), new StreamResult(myOutput));

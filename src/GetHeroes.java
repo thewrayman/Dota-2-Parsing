@@ -18,7 +18,7 @@ public class GetHeroes extends XMLimporter {
 	
 	static void writeHeroes(String url) throws ParserConfigurationException, IOException, SAXException, TransformerException{
 		System.out.println("writing heroes");
-		String target = "C:\\users\\emmet\\Documents\\dota 2 coding\\hero_list.xml";
+		String target = "D:\\Documents\\dota 2 coding\\hero_list.xml";
 		XMLimporter.writeProductsXML(url, target);
 	}
 
