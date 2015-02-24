@@ -26,36 +26,83 @@ import org.json.JSONObject;
 public class XMLParser {
 	
 	public static void parseInfo(String searchType) throws IOException, JSONException{
-		String matchdetailsJSON = readFile("D:\\Documents\\dota 2 coding\\getmatchdetails.txt",StandardCharsets.UTF_8);
+		
+		String matchdetailsJSON = readFile("D:\\Documents\\dota 2 coding\\"+inputManagement.steamID+"\\"+searchType+".json",StandardCharsets.UTF_8);
+		
 		String newJSON = matchdetailsJSON.replaceAll("\\s+","");
+		
 		System.out.println(newJSON);
-		JSONObject myjson = new JSONObject(newJSON);
-		JSONArray the_json_array = myjson.getJSONArray("results");
 		
-		int size = the_json_array.length();
-		ArrayList<JSONObject> arrays=new ArrayList<JSONObject>();
+		JSONParseGetmh(newJSON);
 		
-		for (int i=0;i<size;i++){
-			JSONObject other_json_ob = the_json_array.getJSONObject(i);
-			arrays.add(other_json_ob);
+		
+	}
+	
+	public static void JSONParseGetmh(String jsonstring){
+		try{
+			//go through every row
+			JSONObject rootObject = new JSONObject(jsonstring);
+			JSONArray rows = rootObject.getJSONArray("rows");
+			
+			//create all root elements
+			for(int i=0; i<rows.length();i++){
+				JSONObject row = rows.getJSONObject(i);
+				JSONArray elements = row.getJSONArray("elements");
+				
+				//deserialise each root element
+				for(int j=0; j<elements.length();j++){
+					JSONObject element = elements.getJSONObject(j);
+					//do this now for every field wanted
+					
+					JSONObject status = element.getJSONObject("status");
+					JSONObject results = element.getJSONObject("num_results");
+					JSONObject totalresults = element.getJSONObject("total_results");
+					JSONObject results_remain = element.getJSONObject("results_remaining");
+					
+					//deserialise the array
+					JSONArray matches = element.getJSONArray("matches");
+					
+					//deserialise the objects inside the array
+					for (int x =0;x<matches.length();x++){
+						JSONObject match = matches.getJSONObject(x);
+						
+						JSONObject match_id = match.getJSONObject("match_id");
+						JSONObject match_seq = match.getJSONObject("match_seq_num");
+						JSONObject start_time = match.getJSONObject("start_time");
+						JSONObject lobby_type = match.getJSONObject("lobby_type");
+						
+						JSONArray players = match.getJSONArray("players");
+						
+						for(int y=0;y<players.length();y++){
+							JSONObject player = players.getJSONObject(y);
+							
+							JSONObject account_id = player.getJSONObject("account_id");
+							JSONObject player_slot = player.getJSONObject("player_slot");
+							JSONObject hero_id = player.getJSONObject("hero_id");
+		
+						}
+					
+					}
+					
+			}			
+			}
+		} catch (JSONException e){
+			//JSON PARSING ERROR
+			e.printStackTrace();
 		}
-		
-		JSONObject[] jsons = new JSONObject[arrays.size()];
-		arrays.toArray(jsons);
+	}
+	
+	
+	public static void GMHgson (String jsonstring){
 		
 	}
+	
+	
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	static String readFile(String path, Charset encoding) throws IOException {
 			  byte[] encoded = Files.readAllBytes(Paths.get(path));
 			  return new String(encoded, encoding);
 			}
-	
-	
-	
 
 }

@@ -12,13 +12,13 @@ public class GetHeroes extends XMLimporter {
 
 	static void checkHeroes(String key) throws ParserConfigurationException, IOException, SAXException, TransformerException{
 		System.out.println("checking heroes");
-		String hURL = (heroURL+key+"&language=en_us"+"&"+makeXML);
+		String hURL = (heroURL+key+"&language=en_us");
 		writeHeroes(hURL);
 	}
 	
 	static void writeHeroes(String url) throws ParserConfigurationException, IOException, SAXException, TransformerException{
 		System.out.println("writing heroes");
-		String target = "D:\\Documents\\dota 2 coding\\hero_list.xml";
+		String target = "D:\\Documents\\dota 2 coding\\hero_list.json";
 		XMLimporter.writeProductsXML(url, target);
 	}
 

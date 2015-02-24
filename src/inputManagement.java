@@ -18,9 +18,8 @@ public class inputManagement {
 	
 	public static String getSearchType(){
 		
-		Scanner input = new Scanner(System.in);
-		System.out.println("What method of searching?");
-		searchType = input.nextLine();
+		
+		DefaultGUI.dropdownselect();
 		
 		if(checkHelp(searchType,0)==true){
 			getSearchType();
@@ -49,13 +48,13 @@ public class inputManagement {
 	
 	
 	
-	public static String searchString(String remainderURL,String key,String accountID, String makeXML){
+	public static String searchString(String remainderURL,String key,String accountID){
 		System.out.println("Enter 'help' if you are unsure.");
 		getSearchType();
 		getUserID();
 		
 		System.out.println("URl is:"+baseURL+searchType+remainderURL+key+steamID);
-		String url = baseURL+searchType+remainderURL+key+"&"+ accountID + b+"&"+makeXML;
+		String url = baseURL+searchType+remainderURL+key+"&"+ accountID + b;
 		System.out.println(url);
 		return url;
 	}
